@@ -6,3 +6,4 @@
 
 ## Задачи
 - **Седмица 1** - [тук](https://leetcode.com/problem-list/0o2tbwgv/)
+- **Седмица 2** - [тук](https://leetcode.com/problem-list/0mz08c3j/)
