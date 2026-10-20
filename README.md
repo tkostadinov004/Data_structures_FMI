@@ -4,6 +4,7 @@
 ## Съдържание
 - **Тема 1** - Увод в курса. Сложност. Big Theta. Best-case, average-case, worst-case. Примери за смятане на сложност по време на linear search, binary search, bubble sort, selection sort и insertion sort.
 - **Тема 2** - Анализ на рекурсивни алгоритми. Алгоритми по схемата Divide and conquer. Алгоритми за сортиране - merge sort, quick sort. Алгоритми за сортиране, небазирани на сравнения - counting sort.
+- **Тема 3** - Кешове. Локалност (locality). Свързан списък - едносвързан и двусвързан.
 
 ## Задачи
 - **Седмица 1** - [тук](https://leetcode.com/problem-list/0o2tbwgv/)
