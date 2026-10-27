@@ -1,4 +1,7 @@
 #include <iostream>
+#include <vector>
+#include <stack>
+#include <queue>
 
 class DoublyLinkedList {
 public:
@@ -12,6 +15,48 @@ public:
 		}
 	};
 
+	class Iterator {
+		Node* node;
+	public:
+		Iterator(Node* node) : node(node) {}
+
+		Iterator& operator++() {
+			node = node->next;
+			return *this;
+		}
+		Iterator operator++(int) {
+			Iterator old = *this;
+			++(*this);
+			return old;
+		}
+		
+		Iterator& operator--() {
+			node = node->prev;
+			return *this;
+		}
+		Iterator operator--(int) {
+			Iterator old = *this;
+			--(*this);
+			return old;
+		}
+
+		int& operator*() {
+			return node->value;
+		}
+
+		Node* getPtr() {
+			return node;
+		}
+
+		bool operator==(const Iterator& other) const {
+			return node == other.node;
+		}
+
+		bool operator!=(const Iterator& other) const {
+			return !(*this == other);
+		}
+	};
+
 	~DoublyLinkedList() {
 		Node* curr = head;
 		while (curr) {
@@ -21,8 +66,15 @@ public:
 		}
 	}
 
-	Node* push_front(int val) {
-		// since we haven't implemented an iterator yet, we will return a pointer to the head so that we could use the erase(...) function
+	Iterator begin() {
+		return Iterator(head);
+	}
+
+	Iterator end() {
+		return Iterator(nullptr);
+	}
+
+	Iterator push_front(int val) {
 		if (isEmpty()) {
 			head = tail = new Node(val);
 		}
@@ -32,11 +84,10 @@ public:
 			head->prev = toAdd;
 			head = toAdd;
 		}
-		return head;
+		return Iterator(head);
 	}
 
-	Node* push_back(int val) {
-		// since we haven't implemented an iterator yet, we will return a pointer to the head so that we could use the erase(...) function
+	Iterator push_back(int val) {
 		if (isEmpty()) {
 			head = tail = new Node(val);
 		}
@@ -46,7 +97,7 @@ public:
 			tail->next = toAdd;
 			tail = toAdd;
 		}
-		return tail;
+		return Iterator(tail);
 	}
 
 	void pop_front() {
@@ -76,9 +127,10 @@ public:
 		delete toDelete;
 	}
 
-	void erase(Node* node) {
-		if (!node) throw std::invalid_argument("Node cannot be null!");
-
+	void erase(Iterator it) {
+		if (it == end()) throw std::invalid_argument("Node cannot be null!");
+		
+		Node* node = it.getPtr();
 		if (node == head) pop_front();
 		else if (node == tail) pop_back();
 		else {
@@ -88,7 +140,8 @@ public:
 		}
 	}
 
-	void insert(Node* node, int val) {
+	void insert(Iterator it, int val) {
+		Node* node = it.getPtr();
 		if (node == head) push_front(val);
 		else if (node == tail) push_back(val);
 		else {
@@ -134,13 +187,13 @@ int main() {
 	DoublyLinkedList dll;
 	dll.push_back(1);
 	dll.push_back(2);
-	DoublyLinkedList::Node* rem = dll.push_back(3);
-	DoublyLinkedList::Node* ins = dll.push_back(4);
+	DoublyLinkedList::Iterator it = dll.push_back(3);
+	DoublyLinkedList::Iterator rem = dll.push_back(4);
 	dll.push_back(5);
 	std::cout << dll << std::endl;
 
 	dll.erase(rem);
 	std::cout << dll << std::endl;
-	dll.insert(ins, 100);
+	dll.insert(it, 100);
 	std::cout << dll;
 }
