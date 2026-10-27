@@ -8,10 +8,12 @@ int main() {
 	DoublyLinkedList<int>::Iterator it = dll.push_back(3);
 	DoublyLinkedList<int>::Iterator rem = dll.push_back(4);
 	dll.push_back(5);
-	std::cout << dll << std::endl;
+	dll.print();
+	std::cout << std::endl;
 
 	dll.erase(rem);
-	std::cout << dll << std::endl;
+	dll.print();
+	std::cout << std::endl;
 	dll.insert(it, 100);
-	std::cout << dll;
+	dll.print();
 }
