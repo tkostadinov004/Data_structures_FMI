@@ -1,8 +1,17 @@
 #include <iostream>
 #include <stack>
+#include <string>
 
 bool isDigit(char c) {
 	return c >= '0' && c <= '9';
+}
+
+bool isOp(char c) {
+	return c == '+' || c == '-' || c == '*' || c == '/';
+}
+
+bool hasGreaterThanOrEqualPriority(char op1, char op2) {
+	return (op1 == '*' || op1 == '/') || (op2 == '+' || op2 == '-');
 }
 
 int evaluateRPN(const std::string& s) {
@@ -15,7 +24,12 @@ int evaluateRPN(const std::string& s) {
 		}
 
 		if (isDigit(s[idx])) {
-			st.push(s[idx] - '0');
+			int number = 0;
+			while (idx < s.size() && isDigit(s[idx])) {
+				number = number * 10 + (s[idx] - '0');
+				idx++;
+			}
+			st.push(number);
 		}
 		else {
 			int second = st.top();
@@ -24,32 +38,23 @@ int evaluateRPN(const std::string& s) {
 			st.pop();
 
 			switch (s[idx]) {
-				case '+':
-					st.push(first + second);
-					break;
-				case '-':
-					st.push(first - second);
-					break;
-				case '*':
-					st.push(first * second);
-					break;
-				case '/':
-					st.push(first / second);
-					break;
-
+			case '+':
+				st.push(first + second);
+				break;
+			case '-':
+				st.push(first - second);
+				break;
+			case '*':
+				st.push(first * second);
+				break;
+			case '/':
+				st.push(first / second);
+				break;
 			}
 		}
 		idx++;
 	}
 	return st.top();
-}
-
-bool isOp(char c) {
-	return c == '+' || c == '-' || c == '*' || c == '/';
-}
-
-bool hasGreaterThanOrEqualPriority(char op1, char op2) {
-	return (op1 == '*' || op1 == '/') || (op2 == '+' || op2 == '-');
 }
 
 std::string shuntingYard(const std::string& s) {
@@ -64,8 +69,12 @@ std::string shuntingYard(const std::string& s) {
 		}
 
 		if (isDigit(s[idx])) {
-			res.push_back(s[idx]);
-			res.push_back(' ');
+			std::string number;
+			while (idx < s.size() && isDigit(s[idx])) {
+				number += s[idx++];
+			}
+			res += number + " ";
+			idx--;
 		}
 		else if (isOp(s[idx])) {
 			while (!st.empty() && st.top() != '(' &&
