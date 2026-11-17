@@ -14,3 +14,4 @@
 - **Седмица 2** - [тук](https://leetcode.com/problem-list/0mz08c3j/)
 - **Седмица 3** - [тук](https://leetcode.com/problem-list/02rjmhns/)
 - **Седмици 4 и 5** - [тук](https://leetcode.com/problem-list/0nk4kbqm/)
+- **Седмица 7** - [тук](https://leetcode.com/problem-list/00qnxg7r/)
